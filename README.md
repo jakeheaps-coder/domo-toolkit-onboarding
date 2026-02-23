@@ -5,7 +5,7 @@ Role-based onboarding pages for the Domo Creative Toolkit. Hosted via GitHub Pag
 ## Access
 
 ```
-https://jakeheaps-coder.github.io/creative-toolkit-onboarding/
+https://jakeheaps-coder.github.io/domo-toolkit-onboarding/
 ```
 
 ## Pages
@@ -55,5 +55,5 @@ See [CREATING_NEW_ROLES.md](CREATING_NEW_ROLES.md) for the full process:
 
 ## Related Repos
 
-- **creative-director-toolkit** — The toolkit itself (claude-config, scripts, templates)
-- **creative-toolkit-onboarding** — This repo (onboarding pages)
+- **domo-toolkit** — The toolkit itself (claude-config, scripts, templates)
+- **domo-toolkit-onboarding** — This repo (onboarding pages)

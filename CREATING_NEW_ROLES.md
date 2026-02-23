@@ -8,19 +8,19 @@
 ## Steps
 
 ### 1. Define the Role
-Add the role to `creative-director-toolkit/claude-config/access-control/roles.json`:
+Add the role to `domo-toolkit/claude-config/access-control/roles.json`:
 - Define capabilities (what they can/can't do)
 - Define MCPs, plugins, hooks
 - Define editable/read-only/blocked files
 - Define available commands
 
 ### 2. Create Claude Config Files
-In `creative-director-toolkit/claude-config/`:
+In `domo-toolkit/claude-config/`:
 - Create `CLAUDE.{rolename}.md` — Role-specific instructions
 - Create `settings.{rolename}.json` — Role-specific MCP/plugin config
 
 ### 3. Create the Onboarding Page
-In `creative-toolkit-onboarding/`:
+In `domo-toolkit-onboarding/`:
 1. Copy an existing role page (closest match) as `{rolename}.html`
 2. Steps 1-7: Keep IDENTICAL (do not modify)
 3. Update the navbar role label (e.g., `<span class="navbar-role">NewRole</span>`)
@@ -37,12 +37,12 @@ Add a new card to `index.html` with:
 - Link to `{rolename}.html`
 
 ### 5. Update Users
-Add users to `creative-director-toolkit/claude-config/access-control/users.json`
+Add users to `domo-toolkit/claude-config/access-control/users.json`
 
 ### 6. Deploy
 Commit and push both repos:
-- `creative-director-toolkit` (roles.json, CLAUDE.md, settings.json)
-- `creative-toolkit-onboarding` ({rolename}.html, index.html)
+- `domo-toolkit` (roles.json, CLAUDE.md, settings.json)
+- `domo-toolkit-onboarding` ({rolename}.html, index.html)
 
 ---
 
