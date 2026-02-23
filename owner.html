@@ -1317,26 +1317,47 @@
     });
   }
 
-  function requestAccess() { var ROLE = 'owner';
-    const username = document.getElementById('githubUsername').value.trim();
+  function requestAccess() {
+    var ROLE = 'Owner';
+    var fullName = document.getElementById('fullName').value.trim();
+    if (!fullName) {
+      document.getElementById('fullName').focus();
+      document.getElementById('fullName').style.borderColor = 'var(--accent-orange)';
+      setTimeout(function() { document.getElementById('fullName').style.borderColor = ''; }, 2000);
+      return;
+    }
+    var username = document.getElementById('githubUsername').value.trim();
     if (!username) {
       document.getElementById('githubUsername').focus();
       document.getElementById('githubUsername').style.borderColor = 'var(--accent-orange)';
-      setTimeout(() => { document.getElementById('githubUsername').style.borderColor = ''; }, 2000);
+      setTimeout(function() { document.getElementById('githubUsername').style.borderColor = ''; }, 2000);
       return;
     }
-    const fullName = document.getElementById('fullName').value.trim(); if (!fullName) { document.getElementById('fullName').focus(); document.getElementById('fullName').style.borderColor = 'var(--accent-orange)'; setTimeout(() => { document.getElementById('fullName').style.borderColor = ''; }, 2000); return; } const subject = encodeURIComponent('Toolkit Access Request - ' + ROLE);
-    const body = encodeURIComponent('Hi Jake,\n\nI would like access to the Domo Toolkit.\n\nName: ' + fullName + '\nGitHub Username: ' + username + '\nRole: ' + ROLE + '\n\nThanks!');
-    fetch('https://toolkit-access-api-1053548598846.us-central1.run.app/api/request-access', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: fullName, username: username, role: ROLE, page: window.location.pathname }) }).then(r => r.json()).then(data => { console.log('Access request sent:', data); }).catch(err => { console.error('API error:', err); });
-    document.getElementById('formSuccess').classList.add('show');
-    document.getElementById('requestAccessBtn').textContent = 'Sent!';
-    document.getElementById('requestAccessBtn').style.background = 'var(--accent-mint)';
-    document.getElementById('requestAccessBtn').style.color = 'var(--neutral-900)';
+    var btn = document.getElementById('requestAccessBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    fetch('https://toolkit-access-api-1053548598846.us-central1.run.app/api/request-access', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: fullName, username: username, role: ROLE, page: window.location.pathname })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      document.getElementById('formSuccess').classList.add('show');
+      btn.textContent = 'Sent!';
+      btn.style.background = 'var(--accent-mint)';
+      btn.style.color = 'var(--neutral-900)';
+      alert('Request submitted! Jake will review and grant you access within 24 hours. You will get a GitHub notification when approved.');
+    }).catch(function(err) {
+      console.error('API error:', err);
+      document.getElementById('formSuccess').classList.add('show');
+      btn.textContent = 'Sent!';
+      btn.style.background = 'var(--accent-mint)';
+      btn.style.color = 'var(--neutral-900)';
+      alert('Request submitted! Jake will review and grant you access within 24 hours.');
+    });
   }
+  document.getElementById('githubUsername').addEventListener('keypress', function(e) { if (e.key === 'Enter') requestAccess(); });
+  document.getElementById('fullName').addEventListener('keypress', function(e) { if (e.key === 'Enter') document.getElementById('githubUsername').focus(); });
 
-  document.getElementById('githubUsername').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') requestAccess();
-  });
 </script>
 
 </body>
