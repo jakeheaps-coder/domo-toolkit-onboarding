@@ -1,6 +1,6 @@
-# Domo Creative Toolkit — Onboarding Site
+# Domo Domo Toolkit — Onboarding Site
 
-Role-based onboarding pages for the Domo Creative Toolkit. Hosted via GitHub Pages so employees can follow setup instructions based on their assigned role.
+Role-based onboarding pages for the Domo Domo Toolkit. Hosted via GitHub Pages so employees can follow setup instructions based on their assigned role.
 
 ## Access
 
