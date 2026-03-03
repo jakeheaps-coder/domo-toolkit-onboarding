@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domo Toolkit — Get Started</title>
+  <title>Domo Toolkit — AI-Powered Marketing Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -55,13 +55,29 @@
     }
 
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 153, 34, 0.4); }
-      50% { box-shadow: 0 0 0 12px rgba(255, 153, 34, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(173, 212, 193, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(173, 212, 193, 0); }
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ============================================================
@@ -100,12 +116,48 @@
       color: var(--neutral-900);
     }
 
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-left: auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .navbar-links::-webkit-scrollbar { display: none; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--neutral-600);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s var(--ease-smooth);
+    }
+
+    .nav-link:hover {
+      color: var(--neutral-900);
+      background: var(--neutral-50);
+    }
+
+    .nav-link.active {
+      color: var(--neutral-900);
+      background: rgba(153, 204, 238, 0.15);
+    }
+
     /* ============================================================
        HERO
     ============================================================ */
     .hero {
       background: linear-gradient(180deg, var(--domo-blue) 0%, var(--domo-blue-dark) 100%);
-      padding: 8rem 2rem 5rem;
+      padding: 9rem 2rem 5rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -172,17 +224,17 @@
       margin-bottom: 1rem;
     }
 
-    .hero p {
+    .hero-subtitle {
       font-size: clamp(1.1rem, 2.5vw, 1.35rem);
       font-weight: 300;
       color: rgba(255,255,255,0.9);
       line-height: 1.5;
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      max-width: 650px;
+      margin: 0 auto 2.5rem;
     }
 
     .hero-scroll-hint {
-      margin-top: 2rem;
+      margin-top: 1rem;
       color: rgba(255,255,255,0.6);
       font-size: 0.8rem;
       font-weight: 400;
@@ -196,22 +248,17 @@
     }
 
     /* ============================================================
-       ROLE CARDS
+       SHARED SECTION STYLES
     ============================================================ */
-    .roles-section {
-      padding: 5rem 0;
-      background: #FFFFFF;
-    }
-
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 2rem;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
     }
 
     .section-header h2 {
@@ -226,9 +273,428 @@
       font-size: 1.05rem;
       font-weight: 300;
       color: var(--neutral-600);
-      max-width: 550px;
+      max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-orange);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ============================================================
+       STATS BAR
+    ============================================================ */
+    .stats-section {
+      padding: 4rem 0;
+      background: var(--neutral-50);
+      border-bottom: 1px solid var(--neutral-100);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      opacity: 0;
+      animation: countUp 0.6s var(--ease-out-expo) forwards;
+    }
+
+    .stat-item:nth-child(1) { animation-delay: 0.1s; }
+    .stat-item:nth-child(2) { animation-delay: 0.2s; }
+    .stat-item:nth-child(3) { animation-delay: 0.3s; }
+    .stat-item:nth-child(4) { animation-delay: 0.4s; }
+    .stat-item:nth-child(5) { animation-delay: 0.5s; }
+    .stat-item:nth-child(6) { animation-delay: 0.6s; }
+
+    .stat-number {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      color: var(--neutral-900);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--neutral-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       OVERVIEW
+    ============================================================ */
+    .overview-section {
+      padding: 5rem 0;
+      background: #FFFFFF;
+    }
+
+    .overview-text {
+      max-width: 750px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--neutral-600);
+      line-height: 1.7;
+    }
+
+    .overview-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .pillar-card {
+      padding: 1.75rem;
+      background: #FFFFFF;
+      border: 1.5px solid var(--neutral-100);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153, 204, 238, 0.35);
+    }
+
+    .pillar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-icon.blue { background: rgba(153, 204, 238, 0.15); color: var(--domo-blue-dark); }
+    .pillar-icon.orange { background: rgba(255, 153, 34, 0.1); color: var(--accent-orange); }
+    .pillar-icon.mint { background: rgba(173, 212, 193, 0.2); color: #5a9e7a; }
+
+    .pillar-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.4rem;
+    }
+
+    .pillar-card p {
+      font-size: 0.88rem;
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       FEATURE SECTIONS
+    ============================================================ */
+    .feature-section {
+      padding: 5rem 0;
+    }
+
+    .feature-section.alt { background: var(--neutral-50); }
+    .feature-section.white { background: #FFFFFF; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border: 1px solid var(--neutral-100);
+      border-radius: var(--radius-lg);
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    .feature-section.alt .feature-card { background: #FFFFFF; }
+    .feature-section.white .feature-card { background: var(--neutral-50); border-color: transparent; }
+
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      background: rgba(153, 204, 238, 0.12);
+      color: var(--domo-blue-dark);
+    }
+
+    .feature-card-icon.orange {
+      background: rgba(255, 153, 34, 0.1);
+      color: var(--accent-orange);
+    }
+
+    .feature-card-icon.mint {
+      background: rgba(173, 212, 193, 0.2);
+      color: #5a9e7a;
+    }
+
+    .feature-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.35rem;
+    }
+
+    .feature-card p {
+      font-size: 0.85rem;
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+    .feature-card .tech-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.2rem 0.6rem;
+      background: var(--neutral-50);
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--neutral-600);
+    }
+
+    .feature-section.alt .feature-card .tech-tag { background: var(--neutral-50); }
+    .feature-section.white .feature-card .tech-tag { background: #FFFFFF; }
+
+    /* ============================================================
+       INTEGRATIONS GRID
+    ============================================================ */
+    .integrations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .integration-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid var(--neutral-100);
+      border-radius: var(--radius-lg);
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .integration-item:hover {
+      border-color: rgba(153, 204, 238, 0.4);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .integration-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(153, 204, 238, 0.12);
+      color: var(--domo-blue-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .integration-text h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.15rem;
+    }
+
+    .integration-text p {
+      font-size: 0.75rem;
+      color: var(--neutral-600);
+      line-height: 1.3;
+    }
+
+    /* ============================================================
+       KNOWLEDGE GRAPH
+    ============================================================ */
+    .kg-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .kg-stat {
+      text-align: center;
+      padding: 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid var(--neutral-100);
+      border-radius: var(--radius-lg);
+    }
+
+    .kg-stat .num {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--neutral-900);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .kg-stat .label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--neutral-600);
+    }
+
+    .kg-endpoints {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .endpoint-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      background: #FFFFFF;
+      border: 1px solid var(--neutral-100);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+    }
+
+    .endpoint-method {
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+
+    .endpoint-method.get { background: rgba(173, 212, 193, 0.25); color: #4a8b6a; }
+    .endpoint-method.post { background: rgba(153, 204, 238, 0.2); color: var(--domo-blue-dark); }
+
+    .endpoint-name {
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+
+    .endpoint-desc {
+      font-size: 0.78rem;
+      color: var(--neutral-600);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       DESIGN SYSTEM
+    ============================================================ */
+    .design-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .design-rule-card {
+      padding: 1.5rem;
+      background: var(--neutral-50);
+      border-radius: var(--radius-lg);
+    }
+
+    .design-rule-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.75rem;
+    }
+
+    .color-swatch-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .swatch-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--neutral-600);
+    }
+
+    .font-preview {
+      font-family: 'Open Sans', sans-serif;
+      margin-bottom: 0.4rem;
+    }
+
+    .font-preview.w800 { font-weight: 800; font-size: 1.1rem; }
+    .font-preview.w700 { font-weight: 700; font-size: 1rem; }
+    .font-preview.w600 { font-weight: 600; font-size: 0.95rem; }
+    .font-preview.w400 { font-weight: 400; font-size: 0.9rem; }
+    .font-preview.w300 { font-weight: 300; font-size: 0.9rem; color: var(--neutral-600); }
+
+    .rule-list {
+      list-style: none;
+    }
+
+    .rule-list li {
+      font-size: 0.82rem;
+      color: var(--neutral-600);
+      line-height: 1.5;
+      padding: 0.25rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .rule-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.4rem;
+    }
+
+    .rule-list.do li::before { background: var(--accent-mint); }
+    .rule-list.dont li::before { background: #E5675A; }
+
+    /* ============================================================
+       ROLES SECTION
+    ============================================================ */
+    .roles-section {
+      padding: 5rem 0;
+      background: #FFFFFF;
     }
 
     .roles-grid {
@@ -247,16 +713,7 @@
       transition: all 0.3s var(--ease-smooth);
       display: flex;
       flex-direction: column;
-      opacity: 0;
-      transform: translateY(2rem);
-      animation: domoFadeInUp 0.6s var(--ease-out-expo) forwards;
     }
-
-    .role-card:nth-child(1) { animation-delay: 0.1s; }
-    .role-card:nth-child(2) { animation-delay: 0.2s; }
-    .role-card:nth-child(3) { animation-delay: 0.3s; }
-    .role-card:nth-child(4) { animation-delay: 0.4s; }
-    .role-card:nth-child(5) { animation-delay: 0.5s; }
 
     .role-card:hover {
       transform: translateY(-4px);
@@ -277,18 +734,43 @@
     }
 
     .role-card h3 {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--neutral-900);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.35rem;
     }
 
     .role-card .role-desc {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--neutral-600);
       line-height: 1.5;
       flex: 1;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .role-perms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .perm-tag {
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .perm-tag.yes {
+      background: rgba(173, 212, 193, 0.2);
+      color: #4a8b6a;
+    }
+
+    .perm-tag.no {
+      background: var(--neutral-50);
+      color: var(--neutral-200);
+      text-decoration: line-through;
     }
 
     .role-card .btn-primary {
@@ -327,6 +809,93 @@
     }
 
     /* ============================================================
+       AUTOMATION SECTION
+    ============================================================ */
+    .auto-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .auto-card {
+      display: flex;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border: 1px solid var(--neutral-100);
+      border-radius: var(--radius-lg);
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .auto-card:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .auto-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: rgba(153, 204, 238, 0.12);
+      color: var(--domo-blue-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .auto-card h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .auto-card p {
+      font-size: 0.82rem;
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       DOCS SECTION
+    ============================================================ */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .doc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: var(--neutral-50);
+      border-radius: var(--radius-md);
+    }
+
+    .doc-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--domo-blue-dark);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .doc-item h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.15rem;
+    }
+
+    .doc-item p {
+      font-size: 0.78rem;
+      color: var(--neutral-600);
+      line-height: 1.4;
+    }
+
+    /* ============================================================
        FOOTER
     ============================================================ */
     .footer {
@@ -354,9 +923,7 @@
       transition: opacity 0.2s;
     }
 
-    .footer a:hover {
-      opacity: 0.8;
-    }
+    .footer a:hover { opacity: 0.8; }
 
     .footer .footer-divider {
       width: 40px;
@@ -375,9 +942,13 @@
        RESPONSIVE
     ============================================================ */
     @media (max-width: 768px) {
-      .hero { padding: 6rem 1.5rem 3.5rem; }
+      .hero { padding: 7rem 1.5rem 3.5rem; }
       .roles-grid { grid-template-columns: 1fr; }
       .navbar-inner { padding: 0 1rem; }
+      .navbar-links { display: none; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .kg-highlights { grid-template-columns: repeat(2, 1fr); }
+      .endpoint-desc { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -402,6 +973,15 @@
       <path fill="#FFF" d="M150.5,470.8c12.4-13.8,21.2-30.9,25-49.8,9.9,48.8,53,85.5,104.7,85.5s94.8-36.8,104.7-85.6v85.6h35.4v-127.8l71.4,71.4,71.1-71.4v127.8h36v-85.6c9.9,48.8,53,85.6,104.7,85.6s79.2-24.8,96.4-60.7v-92.2c-17.2-35.9-53.9-60.7-96.4-60.7s-94.8,36.8-104.7,85.6v-85.6l-107.1,106.8-106.8-106.8v85.6c-9.9-48.8-53-85.6-104.7-85.6s-94.8,36.7-104.7,85.5c-3.8-18.9-12.6-36-25-49.8-19.6-21.9-48-35.7-79.7-35.7H0v213.7h70.8c31.7,0,60.1-13.8,79.7-35.7h0ZM703.6,328.5c39.4,0,71.3,31.9,71.3,71.3s-31.9,71.3-71.3,71.3-71.3-31.9-71.3-71.3,31.9-71.3,71.3-71.3ZM280.2,328.5c39.4,0,71.3,31.9,71.3,71.3s-31.9,71.3-71.3,71.3-71.3-31.9-71.3-71.3,31.9-71.3,71.3-71.3ZM35.4,328.6h40.1c37.2,2.4,66.6,33.3,66.6,71.1s-29.4,68.7-66.6,71.1h-40.1v-142.2h0Z"/>
     </svg>
     <span class="navbar-title">Domo Toolkit</span>
+    <div class="navbar-links">
+      <a href="#overview" class="nav-link">Overview</a>
+      <a href="#design" class="nav-link">Design</a>
+      <a href="#media" class="nav-link">Media</a>
+      <a href="#research" class="nav-link">Research</a>
+      <a href="#integrations" class="nav-link">Integrations</a>
+      <a href="#roles" class="nav-link">Roles</a>
+      <a href="#get-started" class="nav-link">Get Started</a>
+    </div>
   </div>
 </nav>
 
@@ -416,29 +996,789 @@
     </div>
 
     <h1>Domo Toolkit</h1>
-    <p>Select your role to see your personalized setup guide</p>
+    <p class="hero-subtitle">A complete AI-powered platform for the Domo Marketing team. Design on-brand assets, generate media, research messaging, and build with 27 commands, 10 integrations, and a semantic knowledge graph.</p>
 
     <div class="hero-scroll-hint">
-      Choose your role below to get started
+      Explore what's inside
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
     </div>
   </div>
 </header>
 
 <!-- ============================================================
-     ROLE SELECTION
+     STATS BAR
 ============================================================ -->
-<section class="roles-section">
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">27</div>
+        <div class="stat-label">Commands</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">10</div>
+        <div class="stat-label">Integrations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">7</div>
+        <div class="stat-label">Roles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">13</div>
+        <div class="stat-label">Safety Hooks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">21</div>
+        <div class="stat-label">Docs</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">39K+</div>
+        <div class="stat-label">KG Relations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     OVERVIEW — WHAT IS THE TOOLKIT
+============================================================ -->
+<section id="overview" class="overview-section">
   <div class="container">
     <div class="section-header">
-      <h2>Select Your Role</h2>
-      <p>Each role has a tailored onboarding guide with specific capabilities and tips</p>
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        What is the Domo Toolkit?
+      </div>
+      <h2>Everything You Need, One Platform</h2>
+      <p>The toolkit turns Claude Code into a Domo-branded creative and engineering workstation. Every output follows Domo's design system automatically.</p>
+    </div>
+
+    <p class="overview-text">
+      Built for Domo's Marketing and Growth teams, the toolkit bundles a 22KB design playbook, a semantic knowledge graph of Domo messaging, AI media generation, Figma integration, and role-based access control into a single system that auto-updates daily. Just talk to Claude and it knows your brand, your products, and your workflow.
+    </p>
+
+    <div class="overview-pillars animate-on-scroll">
+      <div class="pillar-card">
+        <div class="pillar-icon blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <h3>Design & Create</h3>
+        <p>6 design commands produce landing pages, emails, social assets, presentations, infographics, and banner ads — all on-brand by default.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon orange">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>
+        </div>
+        <h3>Generate Media</h3>
+        <p>Create AI images with Gemini 3 Pro and AI videos with Veo 3.1. Edit backgrounds, add elements, generate icons — all from text prompts.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon mint">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>Research & Validate</h3>
+        <p>Query Domo's messaging knowledge graph for positioning, competitors, pain points, and compliance data. Validate any content against brand rules.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Team Access Control</h3>
+        <p>7 roles from Viewer to Owner, each with scoped permissions. Auto-updates push daily so everyone stays current without manual effort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DESIGN CAPABILITIES
+============================================================ -->
+<section id="design" class="feature-section alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+        Design Capabilities
+      </div>
+      <h2>6 Design Commands</h2>
+      <p>Every command produces fully responsive HTML and CSS that follows Domo's brand guidelines automatically</p>
+    </div>
+
+    <div class="feature-grid animate-on-scroll">
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h4>Landing Pages</h4>
+        <p>Full responsive campaign pages with hero sections, feature grids, testimonials, and CTAs. Mobile-ready and SEO-optimized.</p>
+        <span class="tech-tag">/design-landing-page</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h4>Email Templates</h4>
+        <p>600px responsive HTML emails for newsletters, announcements, and campaigns. Compatible with all major email clients.</p>
+        <span class="tech-tag">/design-email-template</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </div>
+        <h4>Social Media Assets</h4>
+        <p>LinkedIn, X/Twitter, and Instagram posts with correct dimensions for each platform. Carousel and story formats included.</p>
+        <span class="tech-tag">/design-social-asset</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 8h5"/><path d="M7 12h10"/></svg>
+        </div>
+        <h4>Presentations</h4>
+        <p>HTML slide decks for sales decks, webinars, and internal reviews. Speaker notes and animations built in.</p>
+        <span class="tech-tag">/design-presentation</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h4>Infographics</h4>
+        <p>Data-driven visual storytelling with statistics, process flows, comparisons, and timelines. Export-ready for web and print.</p>
+        <span class="tech-tag">/design-infographic</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M3 9h6"/><path d="M3 15h6"/></svg>
+        </div>
+        <h4>Banner Ads</h4>
+        <p>IAB standard display ads for Google Ads and programmatic campaigns. All standard sizes: leaderboard, medium rectangle, skyscraper.</p>
+        <span class="tech-tag">/design-banner-ad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MEDIA GENERATION
+============================================================ -->
+<section id="media" class="feature-section white">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        AI Media Generation
+      </div>
+      <h2>Images, Videos, and More</h2>
+      <p>Generate professional media from text prompts using Google's latest AI models</p>
+    </div>
+
+    <div class="feature-grid animate-on-scroll">
+      <div class="feature-card">
+        <div class="feature-card-icon orange">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <h4>AI Image Generation</h4>
+        <p>Create photorealistic images, illustrations, and graphics from text descriptions. Supports 1K, 2K, and 4K resolution with any aspect ratio.</p>
+        <span class="tech-tag">Gemini 3 Pro</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon orange">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <h4>AI Video Generation</h4>
+        <p>Generate 4-8 second AI videos in up to 4K resolution. Product demos, social clips, and animated transitions from a text prompt.</p>
+        <span class="tech-tag">Veo 3.1</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon orange">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h4>Image Editing</h4>
+        <p>Remove backgrounds, change styles, add elements, and transform existing images. Upload a photo and describe the edit you need.</p>
+        <span class="tech-tag">Gemini 3 Pro</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon orange">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h4>Icons & Animations</h4>
+        <p>Generate minimalist SVG icons matching Domo's line-art style. Create CSS/JS animations, loaders, micro-interactions, and motion design.</p>
+        <span class="tech-tag">SVG + CSS/JS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEARCH & INTELLIGENCE
+============================================================ -->
+<section id="research" class="feature-section alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Research & Intelligence
+      </div>
+      <h2>Messaging Knowledge Graph</h2>
+      <p>A semantic graph database with 39,000+ relationships powering Domo messaging queries</p>
+    </div>
+
+    <div class="kg-highlights animate-on-scroll">
+      <div class="kg-stat">
+        <div class="num">6</div>
+        <div class="label">Products</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">24</div>
+        <div class="label">Concepts</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">197</div>
+        <div class="label">Sections</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">11</div>
+        <div class="label">Industries</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">13</div>
+        <div class="label">Endpoints</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">39K+</div>
+        <div class="label">Relationships</div>
+      </div>
+    </div>
+
+    <div class="feature-grid animate-on-scroll">
+      <div class="feature-card">
+        <div class="feature-card-icon mint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h4>Messaging Research</h4>
+        <p>Query Domo's official positioning, value propositions, and strategic themes. Get audience-specific messaging with pain points and compliance data.</p>
+        <span class="tech-tag">/query-messaging</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon mint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <h4>Product Intelligence</h4>
+        <p>Deep-dive on any Domo product: Data Integration, Domo BI, Agent Catalyst, and more. Features, audiences, differentiators, and competitive positioning.</p>
+        <span class="tech-tag">/get-product-info</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon mint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>
+        </div>
+        <h4>Competitor Intel</h4>
+        <p>Competitive analysis for Tableau, Power BI, Snowflake, and more. Win themes, weaknesses, and positioning strategies for each competitor.</p>
+        <span class="tech-tag">/get-competitor-intel</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon mint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h4>Brand Validation</h4>
+        <p>Run any draft content through a 6-layer authority cascade that validates claims against the knowledge graph. Catches messaging errors before they ship.</p>
+        <span class="tech-tag">/brand-check</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FIGMA INTEGRATION
+============================================================ -->
+<section class="feature-section white">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        Figma
+      </div>
+      <h2>Figma Integration</h2>
+      <p>Turn Figma designs into production code, or inspect any design for specs and tokens</p>
+    </div>
+
+    <div class="feature-grid animate-on-scroll" style="max-width: 700px; margin: 0 auto;">
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h4>Figma to Code</h4>
+        <p>Paste a Figma URL and get production-ready HTML/CSS adapted to your project's stack and design tokens. Handles components, layouts, and responsive breakpoints.</p>
+        <span class="tech-tag">/figma-to-code</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h4>Figma Inspect</h4>
+        <p>Analyze any Figma node for colors, typography, spacing, and component structure. Get exact design specs without leaving your editor.</p>
+        <span class="tech-tag">/figma-inspect</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     INTEGRATIONS (10 MCP Servers)
+============================================================ -->
+<section id="integrations" class="feature-section alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Connected Services
+      </div>
+      <h2>10 MCP Integrations</h2>
+      <p>The toolkit connects to your design, data, and collaboration tools through Model Context Protocol servers</p>
+    </div>
+
+    <div class="integrations-grid animate-on-scroll">
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Knowledge Graph</h4>
+          <p>Domo messaging database</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Figma</h4>
+          <p>Design files & components</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Playwright</h4>
+          <p>Browser screenshots & preview</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Exa</h4>
+          <p>Web search & research</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Webflow</h4>
+          <p>Website CMS & pages</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Domo</h4>
+          <p>Datasets, cards, pages</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Context7</h4>
+          <p>Framework documentation</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Slack</h4>
+          <p>Channels & messaging</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Asana</h4>
+          <p>Tasks & project management</p>
+        </div>
+      </div>
+      <div class="integration-item">
+        <div class="integration-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M2 8h20"/></svg>
+        </div>
+        <div class="integration-text">
+          <h4>Notion</h4>
+          <p>Pages & databases</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DESIGN SYSTEM
+============================================================ -->
+<section class="feature-section white">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+        Brand Enforcement
+      </div>
+      <h2>22KB Design Playbook</h2>
+      <p>Every output automatically follows Domo's brand guidelines. Colors, typography, spacing, components, and voice are all enforced by the AI.</p>
+    </div>
+
+    <div class="design-showcase animate-on-scroll">
+      <div class="design-rule-card">
+        <h4>Color Palette</h4>
+        <div class="color-swatch-row">
+          <div class="color-swatch">
+            <div class="swatch" style="background: #99CCEE;"></div>
+            <span class="swatch-label">Domo Blue<br>#99CCEE</span>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background: #FF9922;"></div>
+            <span class="swatch-label">Orange CTA<br>#FF9922</span>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background: #3F454D;"></div>
+            <span class="swatch-label">Dark Text<br>#3F454D</span>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background: #ADD4C1;"></div>
+            <span class="swatch-label">Mint<br>#ADD4C1</span>
+          </div>
+        </div>
+      </div>
+      <div class="design-rule-card">
+        <h4>Typography</h4>
+        <div class="font-preview w800">Open Sans Extra Bold (800)</div>
+        <div class="font-preview w700">Open Sans Bold (700)</div>
+        <div class="font-preview w600">Open Sans Semi Bold (600)</div>
+        <div class="font-preview w400">Open Sans Regular (400)</div>
+        <div class="font-preview w300">Open Sans Light (300)</div>
+      </div>
+      <div class="design-rule-card">
+        <h4>Enforced Rules</h4>
+        <ul class="rule-list do">
+          <li>Use exact Domo SVG logo only</li>
+          <li>4px / 8px spacing grid</li>
+          <li>Layered shadows, smooth transitions</li>
+          <li>Open Sans is the only allowed font</li>
+        </ul>
+      </div>
+      <div class="design-rule-card">
+        <h4>Banned Patterns</h4>
+        <ul class="rule-list dont">
+          <li>No purple gradients</li>
+          <li>No generic blues (#3B82F6, etc.)</li>
+          <li>No pure black (#000)</li>
+          <li>No font substitutes (Inter, Roboto, etc.)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AUTOMATION & INFRASTRUCTURE
+============================================================ -->
+<section class="feature-section alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        Automation
+      </div>
+      <h2>Built-In Safety & Updates</h2>
+      <p>13 bash hooks protect against common mistakes. Daily auto-updates keep everyone in sync.</p>
+    </div>
+
+    <div class="auto-features animate-on-scroll">
+      <div class="auto-card">
+        <div class="auto-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </div>
+        <div>
+          <h4>Daily Auto-Updates</h4>
+          <p>A macOS LaunchAgent pulls the latest toolkit changes from GitHub every morning at 9am. No manual git commands needed.</p>
+        </div>
+      </div>
+      <div class="auto-card">
+        <div class="auto-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Credential Protection</h4>
+          <p>Hooks block .env files from commits and detect hardcoded API keys, tokens, and passwords before they reach version control.</p>
+        </div>
+      </div>
+      <div class="auto-card">
+        <div class="auto-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div>
+          <h4>SSR Detection</h4>
+          <p>Automatically warns when server-side rendering patterns appear in Domo custom apps, which are client-side only.</p>
+        </div>
+      </div>
+      <div class="auto-card">
+        <div class="auto-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div>
+          <h4>Production KG Protection</h4>
+          <p>Blocks direct edits to the production knowledge graph. All changes must go through the dev environment first.</p>
+        </div>
+      </div>
+      <div class="auto-card">
+        <div class="auto-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div>
+          <h4>Auto-Formatting</h4>
+          <p>YAML, JSON, and Markdown files are automatically formatted on save. Consistent code style across the entire team.</p>
+        </div>
+      </div>
+      <div class="auto-card">
+        <div class="auto-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+          <h4>Contributing via PR</h4>
+          <p>Non-owner users can propose improvements to the playbook, commands, and docs via pull request. Changes are reviewed and merged.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DOCUMENTATION
+============================================================ -->
+<section class="feature-section white">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Documentation
+      </div>
+      <h2>21 Reference Guides</h2>
+      <p>From beginner walkthroughs to deep technical guides, everything is documented</p>
+    </div>
+
+    <div class="docs-grid animate-on-scroll">
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Getting Started Walkthrough</h4>
+          <p>Step-by-step beginner guide from install to first project</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Quick Reference Card</h4>
+          <p>One-page cheat sheet of all commands and shortcuts</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Figma Guide</h4>
+          <p>Complete workflow for Figma-to-code and design inspection</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>MCP Server Reference</h4>
+          <p>Setup and usage for all 10 connected integrations</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Troubleshooting</h4>
+          <p>Common issues, fixes, and diagnostic commands</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Contributing Guide</h4>
+          <p>How to propose improvements via pull request</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Project Organization</h4>
+          <p>Folder structure and naming conventions for projects</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>KG API Reference</h4>
+          <p>All 13 endpoints, payloads, and reliability notes</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <svg class="doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <h4>Card CRUD Reference</h4>
+          <p>207 chart types and full Domo Card API schema</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ROLES OVERVIEW
+============================================================ -->
+<section id="roles" class="feature-section alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Access Control
+      </div>
+      <h2>7-Level Role System</h2>
+      <p>Each role gets exactly the tools and permissions they need. No more, no less.</p>
+    </div>
+
+    <div class="feature-grid animate-on-scroll">
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h4>Owner</h4>
+        <p>Full access to everything. Direct push to repos, deploy services, manage users, edit the toolkit. All 10 MCP servers.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag yes">Design</span>
+          <span class="perm-tag yes">Deploy</span>
+          <span class="perm-tag yes">Users</span>
+          <span class="perm-tag yes">Toolkit</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
+        </div>
+        <h4>Admin</h4>
+        <p>Full engineering and design capabilities. Changes go through PR review. Build agents, deploy services, create designs. All 10 MCP servers.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag yes">Design</span>
+          <span class="perm-tag yes">Deploy</span>
+          <span class="perm-tag no">Users</span>
+          <span class="perm-tag yes">PR Only</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h4>Editor</h4>
+        <p>Full toolkit editing via PR — playbook, commands, helpers, docs. Design capabilities plus 5 MCP servers. No deploy access.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag yes">Design</span>
+          <span class="perm-tag no">Deploy</span>
+          <span class="perm-tag no">Users</span>
+          <span class="perm-tag yes">PR Only</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <h4>Product Marketing</h4>
+        <p>Design, media generation, messaging research, and battle cards. Tailored for product marketing workflows. 5 MCP servers.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag yes">Design</span>
+          <span class="perm-tag no">Deploy</span>
+          <span class="perm-tag no">Users</span>
+          <span class="perm-tag yes">Limited PR</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <h4>Creative</h4>
+        <p>Design, media generation, messaging research. Can propose improvements to the design system and toolkit. 5 MCP servers.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag yes">Design</span>
+          <span class="perm-tag no">Deploy</span>
+          <span class="perm-tag no">Users</span>
+          <span class="perm-tag yes">Limited PR</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h4>Builder</h4>
+        <p>Build designs and generate media using all creative tools. Can't modify the toolkit. 3 MCP servers: KG, Figma, Playwright.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag yes">Design</span>
+          <span class="perm-tag no">Deploy</span>
+          <span class="perm-tag no">Users</span>
+          <span class="perm-tag no">Toolkit</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h4>Viewer</h4>
+        <p>Research messaging and competitive intel only. Query Domo's positioning, product info, and brand guidelines. 1 MCP server: KG.</p>
+        <div style="margin-top: 0.5rem;">
+          <span class="perm-tag no">Design</span>
+          <span class="perm-tag no">Deploy</span>
+          <span class="perm-tag no">Users</span>
+          <span class="perm-tag no">Toolkit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GET STARTED — ROLE CARDS WITH LINKS
+============================================================ -->
+<section id="get-started" class="roles-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Request Access
+      </div>
+      <h2>Get Started</h2>
+      <p>Select your role to see your personalized setup guide and request access to the toolkit</p>
     </div>
 
     <div class="roles-grid">
 
       <!-- Owner -->
-      <div class="role-card">
+      <div class="role-card animate-on-scroll">
         <div class="role-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
@@ -451,7 +1791,7 @@
       </div>
 
       <!-- Admin -->
-      <div class="role-card">
+      <div class="role-card animate-on-scroll">
         <div class="role-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1.08 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1.08z"/></svg>
         </div>
@@ -464,20 +1804,33 @@
       </div>
 
       <!-- Editor -->
-      <div class="role-card">
+      <div class="role-card animate-on-scroll">
         <div class="role-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
         <h3>Editor</h3>
-        <p class="role-desc">Full toolkit editing via PR — playbook, commands, helpers, docs. Can view but not edit project code (Gemini, KG).</p>
+        <p class="role-desc">Full toolkit editing via PR — playbook, commands, helpers, docs. Can view but not edit project code.</p>
         <a href="editor.html" class="btn-primary">
           Get Started
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
 
+      <!-- Product Marketing -->
+      <div class="role-card animate-on-scroll">
+        <div class="role-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <h3>Product Marketing</h3>
+        <p class="role-desc">Design, media, messaging research, and battle cards. Tailored for product marketing workflows.</p>
+        <a href="product-marketing.html" class="btn-primary">
+          Get Started
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
       <!-- Creative -->
-      <div class="role-card">
+      <div class="role-card animate-on-scroll">
         <div class="role-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
         </div>
@@ -490,7 +1843,7 @@
       </div>
 
       <!-- Builder -->
-      <div class="role-card">
+      <div class="role-card animate-on-scroll">
         <div class="role-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </div>
@@ -503,7 +1856,7 @@
       </div>
 
       <!-- Viewer -->
-      <div class="role-card">
+      <div class="role-card animate-on-scroll">
         <div class="role-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
@@ -535,6 +1888,52 @@
   <div class="footer-divider"></div>
   <p class="footer-small">Domo Toolkit &middot; Domo Marketing &middot; 2026</p>
 </footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+  // Smooth scrolling for nav links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Active nav link tracking
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 80;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
