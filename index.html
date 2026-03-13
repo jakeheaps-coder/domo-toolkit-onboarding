@@ -606,6 +606,75 @@
     }
 
     /* ============================================================
+       DOMO PLATFORM GRID
+    ============================================================ */
+    .domo-api-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .domo-api-card {
+      padding: 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid var(--neutral-100);
+      border-radius: var(--radius-lg);
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .domo-api-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153, 204, 238, 0.35);
+    }
+
+    .domo-api-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .domo-api-card h4 .api-count {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 100px;
+      background: rgba(153, 204, 238, 0.15);
+      color: var(--domo-blue-dark);
+    }
+
+    .domo-api-card p {
+      font-size: 0.78rem;
+      color: var(--neutral-600);
+      line-height: 1.45;
+    }
+
+    .domo-api-card .api-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .domo-api-card .api-method {
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .api-method.crud { background: rgba(173, 212, 193, 0.25); color: #4a8b6a; }
+    .api-method.query { background: rgba(153, 204, 238, 0.2); color: var(--domo-blue-dark); }
+    .api-method.ai { background: rgba(255, 153, 34, 0.12); color: var(--accent-orange); }
+
+    /* ============================================================
        DESIGN SYSTEM
     ============================================================ */
     .design-showcase {
@@ -979,6 +1048,7 @@
       <a href="#media" class="nav-link">Media</a>
       <a href="#research" class="nav-link">Research</a>
       <a href="#integrations" class="nav-link">Integrations</a>
+      <a href="#domo-apis" class="nav-link">Domo APIs</a>
       <a href="#roles" class="nav-link">Roles</a>
       <a href="#get-started" class="nav-link">Get Started</a>
     </div>
@@ -996,7 +1066,7 @@
     </div>
 
     <h1>Domo Toolkit</h1>
-    <p class="hero-subtitle">A complete AI-powered platform for the Domo Marketing team. Design on-brand assets, generate media, research messaging, and build with 27 commands, 10 integrations, and a semantic knowledge graph.</p>
+    <p class="hero-subtitle">A complete AI-powered platform for the Domo Marketing team. Design on-brand assets, generate media, research messaging, and manage the full Domo platform — with 27 commands, 10 integrations, 150+ Domo API tools, and a semantic knowledge graph.</p>
 
     <div class="hero-scroll-hint">
       Explore what's inside
@@ -1024,12 +1094,12 @@
         <div class="stat-label">Roles</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">13</div>
-        <div class="stat-label">Safety Hooks</div>
+        <div class="stat-number">150+</div>
+        <div class="stat-label">Domo API Tools</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">21</div>
-        <div class="stat-label">Docs</div>
+        <div class="stat-number">13</div>
+        <div class="stat-label">Safety Hooks</div>
       </div>
       <div class="stat-item">
         <div class="stat-number">39K+</div>
@@ -1054,7 +1124,7 @@
     </div>
 
     <p class="overview-text">
-      Built for Domo's Marketing and Growth teams, the toolkit bundles a 22KB design playbook, a semantic knowledge graph of Domo messaging, AI media generation, Figma integration, and role-based access control into a single system that auto-updates daily. Just talk to Claude and it knows your brand, your products, and your workflow.
+      Built for Domo's Marketing and Growth teams, the toolkit bundles a 22KB design playbook, a semantic knowledge graph of Domo messaging, AI media generation, Figma integration, full Domo platform API access (150+ tools, 624+ endpoints), and role-based access control into a single system that auto-updates daily. Just talk to Claude and it knows your brand, your products, and your workflow.
     </p>
 
     <div class="overview-pillars animate-on-scroll">
@@ -1386,8 +1456,8 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
         </div>
         <div class="integration-text">
-          <h4>Domo</h4>
-          <p>Datasets, cards, pages</p>
+          <h4>Domo Platform</h4>
+          <p>150+ API tools — full CRUD</p>
         </div>
       </div>
       <div class="integration-item">
@@ -1431,9 +1501,160 @@
 </section>
 
 <!-- ============================================================
+     DOMO PLATFORM APIs
+============================================================ -->
+<section id="domo-apis" class="feature-section white">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Domo Platform Access
+      </div>
+      <h2>150+ Domo API Tools</h2>
+      <p>Full programmatic access to the Domo platform through the Domo MCP server. Query data, create cards, manage workflows, and more — all from Claude Code.</p>
+    </div>
+
+    <div class="kg-highlights animate-on-scroll">
+      <div class="kg-stat">
+        <div class="num">624+</div>
+        <div class="label">API Endpoints</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">37</div>
+        <div class="label">Categories</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">207</div>
+        <div class="label">Chart Types</div>
+      </div>
+      <div class="kg-stat">
+        <div class="num">150+</div>
+        <div class="label">MCP Tools</div>
+      </div>
+    </div>
+
+    <div class="domo-api-grid animate-on-scroll">
+      <div class="domo-api-card">
+        <h4>Datasets <span class="api-count">15+</span></h4>
+        <p>Create, query with SQL, import, export, share, and manage schemas and PDP policies</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">SQL</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Cards & Charts <span class="api-count">207 types</span></h4>
+        <p>Create any of 207 chart types, update overrides, copy, share, and manage beast modes</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Search</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Pages <span class="api-count">6+</span></h4>
+        <p>Create dashboards, manage page layouts, add cards, and organize content collections</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Workflows <span class="api-count">20+</span></h4>
+        <p>Create automation pipelines, manage triggers, run workflows, and inspect execution history</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Run</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Code Engine <span class="api-count">13+</span></h4>
+        <p>Deploy serverless functions, manage versions, set permissions, and execute code remotely</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Execute</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>AI Services <span class="api-count">7+</span></h4>
+        <p>AI chat, text generation, summarization, image-to-text, text-to-SQL, and beast mode generation</p>
+        <div class="api-methods">
+          <span class="api-method ai">AI</span>
+          <span class="api-method query">Generate</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Users & Groups <span class="api-count">12+</span></h4>
+        <p>Manage users, roles, groups, and permissions across the Domo instance</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Search</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>DataFlows <span class="api-count">10+</span></h4>
+        <p>Create ETL pipelines, manage Magic ETL, run bulk dataflows, and monitor execution status</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Run</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>AppDB <span class="api-count">5+</span></h4>
+        <p>Create document collections, store and query JSON documents for custom app backends</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Query</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Alerts & Reports <span class="api-count">8+</span></h4>
+        <p>Create alerts, manage scheduled reports, send reports on demand, and monitor subscriptions</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+          <span class="api-method query">Send</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Jupyter Workspaces <span class="api-count">3+</span></h4>
+        <p>Create and manage Jupyter notebook environments for data science workflows</p>
+        <div class="api-methods">
+          <span class="api-method crud">CRUD</span>
+        </div>
+      </div>
+      <div class="domo-api-card">
+        <h4>Governance <span class="api-count">10+</span></h4>
+        <p>Activity logs, governance jobs, publications, sandboxes, roles, authorities, and compliance</p>
+        <div class="api-methods">
+          <span class="api-method query">Read</span>
+          <span class="api-method crud">Manage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-grid animate-on-scroll" style="max-width: 700px; margin: 0 auto;">
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h4>Domo Basic MCP</h4>
+        <p>SQL queries against any dataset, full-text search across the instance, and fileset management. Connected via Domo's official MCP endpoint.</p>
+        <span class="tech-tag">domoBasic MCP</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon orange">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h4>Full Platform API</h4>
+        <p>150+ tools covering cards, pages, datasets, users, workflows, Code Engine, alerts, AI services, AppDB, publications, and more. Full CRUD on almost every Domo object.</p>
+        <span class="tech-tag">domoFull MCP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      DESIGN SYSTEM
 ============================================================ -->
-<section class="feature-section white">
+<section class="feature-section alt">
   <div class="container">
     <div class="section-header">
       <div class="section-label">
